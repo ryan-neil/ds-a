@@ -18,6 +18,10 @@ For this reference guide all example code will be written in the JavaScript prog
     * [The problem with time](#The-problem-with-time)
     * [Big O logic](#Big-o-logic)
     * [Space complexity](#Space-complexity)
+    * [Logarithms](#Logarithms)
+2. [Analyzing Performance of Arrays and Objects](#2-Analyzing-Performance-of-Arrays-and-Objects)
+    * [The Big O of objects](#The-Big-O-of-objects)
+3. [Problem Solving Approach](#3-Problem-Solving-Approach)
 
 ## 1. Big O Notation
 
@@ -33,8 +37,6 @@ Well, why does this matter?
 Big O is focused on the _big_ picture.
 
 **[⬆ Top](#📓-Table-of-Contents)**
-
----
 
 ### Timing our code
 
@@ -76,8 +78,6 @@ You'll notice our second method is much faster (relative) than method 1. But thi
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
----
-
 ### The problem with time
 
   * Different machines will record different times
@@ -97,9 +97,9 @@ function addUpTo(n) {
   return n * ( n + 1 ) / 2;
 }
 ```
-In the example above, we have 3 __operations__ going on (1 multiplication, 1 addition, and 1 division). Regardless if our number (`𝑛`) is 1 or 1 billion there will always only be 3 __operations__. 
+In the example above, we have 3 __operations__ going on (1 multiplication, 1 addition, and 1 division). Regardless if our number (`n`) is 1 or 1 billion there will always only be 3 __operations__. 
 
-This is __𝑂(1)__ (constant) which is very efficient.
+This is __O(1)__ (constant) which is very efficient.
 
 Let's compare that to our other example from above:
 ```js
@@ -111,69 +111,67 @@ function addUpTo(n) {
   return total;
 }
 ```
-In this example, since we're looping, where we have `total += i` the addition is not just 1 addition operation, it's `𝑛` number of operations. And same goes for the rest of the operators in this method, they will all run `𝑛` number of times. 
+In this example, since we're looping, where we have `total += i` the addition is not just 1 addition operation, it's `n` number of operations. And same goes for the rest of the operators in this method, they will all run `n` number of times. 
 
-This is __𝑂(𝑛)__ (linear) which is extremely inefficient.
+This is __O(n)__ (linear) which is extremely inefficient.
 
-Depending on what we count, the number of operations can be as low as _2𝑛_ or as high as _5𝑛 + 2_. But regardless of the exact number, the number of operations grows roughly _proportionally_ with _𝑛_.
+Depending on what we count, the number of operations can be as low as _2n_ or as high as _5n + 2_. But regardless of the exact number, the number of operations grows roughly _proportionally_ with _n_.
 
 **[⬆ Top](#📓-Table-of-Contents)**
-
----
 
 ### Big O logic
 
 Warning! Technically definition:
 
-We say that an algorithm is __𝑂(f(𝑛))__ if the number of simple operations the computer has to do is eventually less than a constant times __f(𝑛)__, as __𝑛__ increases. Huh...
+We say that an algorithm is __O(f(n))__ if the number of simple operations the computer has to do is eventually less than a constant times __f(n)__, as __n__ increases. Huh...
 
-Basically, what it's doing is describing the relationship between the input (f(𝑛)) and the output or runtime (𝑛, 𝑛², 1).
+Basically, what it's doing is describing the relationship between the input (f(n)) and the output or runtime (n, n², 1).
 
 Let's look as some options below:
 
-##### `f(𝑛)`: a function with an input of '𝑛'
-##### `f(𝑛) = 𝑛`: a function with an input of '𝑛' and an output of '𝑛'
+##### `f(n)`: a function with an input of 'n'
+##### `f(n) = n`: a function with an input of 'n' and an output of 'n'
 
 Options:
-  * f(𝑛) could be __linear__ (f(𝑛) = 𝑛)
-  * f(𝑛) could be __quadratic__ (f(𝑛) = 𝑛²)
-  * f(𝑛) could be __constant__ (f(𝑛) = 1)
-  * f(𝑛) could be something entirely different
+  * f(n) could be __linear__ (f(n) = n)
+  * f(n) could be __quadratic__ (f(n) = n²)
+  * f(n) could be __constant__ (f(n) = 1)
+  * f(n) could be something entirely different
 
 #### Linear:
 
-__𝑂(𝑛)__
+__O(n)__
 
-As n scales, the input (`f(n)`) and the runtime (`𝑛`) scales as well.
+As n scales, the input (`f(n)`) and the runtime (`n`) scales as well.
 
 #### Quadratic:
 
-__𝑂(𝑛²)__
+__O(n²)__
 
-As `𝑛` scales, the runtime (`𝑛²`) squares (square event).
+As `n` scales, the runtime (`n²`) squares (square event).
 
-It's important to note that an `𝑂(𝑛)` operation inside of an `𝑂(n)` operation gives us `𝑂(𝑛 * 𝑛)` or `𝑂(𝑛²)`.
+It's important to note that an `O(n)` operation inside of an `O(n)` operation gives us `O(n * n)` or `O(n²)`.
 
 #### Constant:
 
-__𝑂(1)__
+__O(1)__
 
-As `𝑛` scales, it doesn't really have an impact because runtime is always constant, which we simplify down to `1`.
+As `n` scales, it doesn't really have an impact because runtime is always constant, which we simplify down to `1`.
 
 #### Simplifying Big O:
 
 Constants don't matter.
 ```
-𝑂(2𝑂) -> 𝑂(𝑛)
-𝑂(500) -> 𝑂(1)
-𝑂(13𝑛²) -> 𝑂(𝑛²)
+O(2O) -> O(n)
+O(500) -> O(1)
+O(13n²) -> O(n²)
 ```
 
 Smaller terms don't matter.
 ```
-𝑂(𝑛 + 10) -> 𝑂(𝑛)
-𝑂(1000𝑛 + 50) -> 𝑂(𝑛)
-𝑂(𝑛² + 5𝑛 + 8) -> 𝑂(𝑛²)
+O(n + 10) -> O(n)
+O(1000n + 50) -> O(n)
+O(n² + 5n + 8) -> O(n²)
 ```
 
 #### Shorthands:
@@ -186,8 +184,6 @@ Smaller terms don't matter.
 4. In a loop, the complexity is the length of the loop times the complexity of whatever happens inside of the loop
 
 **[⬆ Top](#📓-Table-of-Contents)**
-
----
 
 ### Space complexity
 
@@ -205,33 +201,221 @@ __Space Complexity__: is the total space used by your algorithm to solve the pro
 
 An example between the two would be:
 
-If we compare Quicksort and Mergesort, they both have a space complexity of 𝑂(𝑛) and run at 𝑂(𝑛log𝑛) time, but Mergesort requires Auxiliary space of 𝑂(𝑛) while Quicksort requires Auxiliary space of 𝑂(1).
+If we compare Quicksort and Mergesort, they both have a space complexity of O(n) and run at O(n log n) time, but Mergesort requires Auxiliary space of O(n) while Quicksort requires Auxiliary space of O(1).
 
 #### Rules of thumb:
 
   * Most primitives (booleans, numbers, undefined, null) are constant space
-  * Strings require 𝑂(𝑛) space (where 𝑛 is the string length)
-  * Reference types are generally 𝑂(𝑛), where 𝑛 is the length (for arrays) or the number of keys (for objects)
+  * Strings require O(n) space (where n is the string length)
+  * Reference types are generally O(n), where n is the length (for arrays) or the number of keys (for objects)
 
 Let's look at an example:
 ```js
 const sum = (arr) => {
   let total = 0;
   for (let i = 0; i < arr.length; i++) {
-    total += arr[1];
+    total += arr[i];
   }
   return total;
 };
-sum([ 2, 6, 4, 9 ]); // -> 24
+sum([ 2, 6, 4, 9 ]); // -> 21
 ```
 
 In the example above, no matter what the array length is, we have one variable called `total` (one number). And then we're looping through, but remember we're not concerned about the _time_, we also have a second declaration inside the for loop (`let i = 0`) which is another number. But that's it for _space_.
 
-So again no matter what the size of the array is (𝑛), or in our case `arr`, as it grows it won't have an impact on the space that's taken up because we only have 2 variables (`total` and `i`). We aren't adding new variables based on the length, we're adding to the `total` variable, but not making a new one.
+So again no matter what the size of the array is (n), or in our case `arr`, as it grows it won't have an impact on the space that's taken up because we only have 2 variables (`total` and `i`). We aren't adding new variables based on the length, we're adding to the `total` variable, but not making a new one.
 
-So this means we have _constant_ space (𝑂(1) space!).
+So this means we have _constant_ space (O(1) space!).
 
 Let's have a look at another example:
 ```js
+const double = (arr) => {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(arr[i] * 2);
+  }
+  return newArr;
+};
+double([ 2, 6, 4, 9 ]); // -> [ 4, 12, 8, 18 ]
+```
+
+So how does this effect the space complexity of this algorithm? So as the array (`arr`) length grows, our `newArr` variable is directly proportionate to the length of the input. So if the `arr` is 10 items, we're storing 10 items in `newArr`.
+
+So the space taken up is directly proportionate to `n` and to the input array. So for space complexity we would have __O(n)__.
+
+**[⬆ Top](#📓-Table-of-Contents)**
+
+### Logarithms
+
+So far, we've encountered some of the most common complexities: __O(1)__, __O(n)__, __O(n²)__. Sometimes Big O expressions invilve more complex mathematical expressions. One that appears more often than we might like is the __logarithm__.
+
+#### What's a logarithm?
+
+To put simply, a __logarithm__ is the inverse of exponentiation. So, just like _division_ and _multiplication_ are a pair, _logarithms_ and _exponents_ are a pair.
+
+log<sub>2</sub>(8) -> 2<sup>3</sup> = 8
+<br>
+log<sub>2</sub>(_value_) = _exponent_ -> 2<sup>_exponent_</sup> = _value_
+
+What we're concerned about is the _Big_ picture so we're just going to omit the 2. We'll just say log:
+
+log == log<sub>2</sub>
+
+It doesn't really matter at the end of the day, because if we're comparing the graph of a constant time and a quadratic time and log(n) time, it doesn't really matter if it's log base 2, log base 10. All we care about is the general _trend_.
+
+#### Rule of thumb:
+
+The logarithm of a number roughly measures the number of times you can divide that number by 2 __before you get a value that's less than or equal to one__.
+
+#### Example 1: Find the log of 8
 
 ```
+8 / 2 = 4 -> still > 1. 
+4 / 2 = 2 -> still > 1. 
+2 / 2 = 1 -> Finally we get <= 1.
+
+log(8) = 3 -> Since we had to divide 3 times.
+```
+
+#### Example 2: Find the log of 25
+
+```
+25     / 2 = 12.5     -> still > 1.
+12.5   / 2 = 6.25     -> still > 1.
+6.25   / 2 = 3.125    -> still > 1.
+3.125  / 2 = 1.5625   -> still > 1.
+1.5625 / 2 = 0.78125  -> Finally we get <= 1.
+
+log(25) = ~ 4.64 -> Since we had to divide somewhere between 4 and 5 times.
+```
+
+#### Logarithm Complexity
+
+In example 2 from above, there's no way of dividing 2 evenly into 25 but this isn't that important. We don't really care whether or not the number is divisible by 2.
+
+What we do care about is the Logarithm Complexity. Logarithm time complexity is amazing! If we have an algorithm with O(log n) this is fantastic.
+
+#### Why is this important?
+
+  * Certain searching algorithms have logarithmic time complexity.
+  * Efficient sorting algorithms involve logarithms.
+  * Recursion sometimes involves logarithmic space complexity.
+
+**[⬆ Top](#📓-Table-of-Contents)**
+
+## 2. Analyzing Performance of Arrays and Objects
+
+#### Objectives:
+
+  * Understand how objects and arrays work, through the lens of Big O
+  * Explain why adding elements to the beginning of an array is costly
+  * Compare and contrast the runtime for arrays and objects, as well as their built-in methods
+
+### The Big O of objects
+
+Example:
+```js
+let instructor = {
+  firstName: 'Katie',
+  isInstructor: true,
+  favoriteNumbers: [ 1, 2, 3, 4 ]
+}
+```
+
+When to use objects:
+  * Objects work well when we don't need order
+  * When we need fast access/insertion and removal
+
+Insertion - __O(1)__
+<br>
+Removal - __O(1)__
+<br>
+Search - __O(N)__
+<br>
+Access - __O(1)__
+
+As you can see from above, objects are VERY fast. They're constant time which is the best we can do.
+
+#### Object methods
+
+Now let's look at the Big O of object methods we have in JavaScript:
+
+Object.keys - __O(N)__
+<br>
+Object.values - __O(N)__
+<br>
+Object.entries - __O(N)__
+<br>
+hasOwnProperty - __O(1)__
+
+**[⬆ Top](#📓-Table-of-Contents)**
+
+### The Big O of arrays
+
+Example:
+```js
+let names = [ 'Katie', 'Ryan', 'Chinito' ];
+
+let values = [ true, {}, [], 2, 'Hello World' ];
+```
+
+When to use objects:
+  * When we need order
+  * When we need fast access/insertion and removal (sort of...)
+
+Insertion - __It depends...__
+<br>
+Removal - __It depends...__
+<br>
+Search - __O(N)__
+<br>
+Access - __O(1)__
+
+Let's talk about insertion and removal. So with insertion, it really depends on where we're inserting. Say we want to add `Choncho` to the end of the `names` array from above:
+```js
+let names = [ 'Katie', 'Ryan', 'Chinito', 'Choncho' ];
+```
+
+This is _constant_. Where our problems come is when we want to add an item to the beginning of the array:
+```js
+let names = [ 'Choncho', 'Katie', 'Ryan', 'Chinito' ];
+```
+
+This has to do with the indices of the array. When we add an item to the beginning of an array we have to re-index every item in that array, so we have __O(n)__ time. Where-as when adding an item to the end we just have to index that one item, so we have __O(1)__ time.
+
+The same logic applies for removing items from the beginning and end of arrays. So, `push()` and `pop()` will always be faster than `shift()` and `unshift()`.
+
+#### Array methods:
+
+Now let's look at the Big O of array methods we have in JavaScript:
+
+push() - __O(1)__
+<br>
+pop() - __O(1)__
+<br>
+shift() - __O(N)__
+<br>
+unshift() - __O(N)__
+<br>
+concat() - __O(N)__
+<br>
+slice() - __O(N)__
+<br>
+splice() - __O(N)__
+<br>
+sort() - __O(N * log N)__
+<br>
+forEach() / map() / filter() / reduce() / etc. - __O(N)__
+
+#### Takeaways:
+
+1. Objects are fast at pretty much everything, but there's no order to them.
+2. Arrays are great when you need an order, but still be mindful that it's better (if we can) to add and remove from the end and avoid adding and removing from the  beginning, because that starts a cascade effect, hence the terms _shift_ and _unshift_ where everything has to be re-indexed. _The same goes for adding and removing from the middle_.
+ 
+**[⬆ Top](#📓-Table-of-Contents)**
+
+## 3. Problem Solving Approach
+
+
+
+**[⬆ Top](#📓-Table-of-Contents)**
