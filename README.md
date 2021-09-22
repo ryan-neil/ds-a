@@ -21,7 +21,10 @@ For this reference guide all example code will be written in the JavaScript prog
     * [Logarithms](#Logarithms)
 2. [Analyzing Performance of Arrays and Objects](#2-Analyzing-Performance-of-Arrays-and-Objects)
     * [The Big O of objects](#The-Big-O-of-objects)
+    * [The Big O of arrays](#The-Big-O-of-arrays)
 3. [Problem Solving Approach](#3-Problem-Solving-Approach)
+    * [The approach](#The-approach)
+    * [The patterns](#The-patterns)
 
 ## 1. Big O Notation
 
@@ -415,6 +418,68 @@ forEach() / map() / filter() / reduce() / etc. - __O(N)__
 **[⬆ Top](#📓-Table-of-Contents)**
 
 ## 3. Problem Solving Approach
+
+Let's start off by defining an __algorithm__. An algorithm is essentially a __process__ or __set of steps__ to accomplish a certain task.
+
+Almost _everything_ we do in programming involves some sort of algorithm. It is the _foundation_ for being a _successful_ problem solving _developer_.
+
+So how do we improve at solving problems?
+  1. __Devise__ a plan for solving problems
+  2. __Master__ common problem solving patterns
+
+### The approach
+
+Let's look at some problem solving strategies that can help when we are presented with an algorithm problem:
+  * Understand the problem
+  * Explore concrete examples
+  * Break it down
+  * Solve/simplify
+  * Look back and refactor
+
+#### Step 1: Understand the problem
+
+  1. Can I _restate_ the problem in my own words?
+  2. What are the _inputs_ that go into the problem?
+  3. What are the _outputs_ that should come from the solution to the problem?
+  4. Can the _outputs_ be determined from the _inputs_? In other words, do I have enough information to solve the problem? 
+  5. How should I _label_ the important pieces of _data_ that are a part of the problem?
+
+#### Step 2: Explore concrete examples
+
+Coming up with examples can help us understand the problem better. Examples also provide sanity checks that your eventual solution works as it should.
+
+Examples of this could be __user stories__, which are basically, if given an _input_ what should the _output_ be? The input could be a _user action_ and what should happen after this _user action_?
+
+Another example could be __unit tests__, which are used on a smaller scale to help layout how something should work for a smaller feature.
+
+Let's now look at some steps we can take for exploring concrete examples:
+
+  1. Start with _simple_ examples
+  2. Progress to more _complex_ examples
+  3. Explore examples with _empty inputs_
+  4. Explore examples with _invalid inputs_
+
+#### Step 3: Break it down
+
+In other words take the actual steps of the problem and write them down. This doesn't mean full sudo code or valid syntax, it's little comments as a guide for the steps I'm going to need to take.
+
+This forces us to think about our code before we write it, and it helps us catch any lingering conceptual issues or misunderstandings before we dive in and have to worry about details.
+
+#### Example:
+Q: Write a function which takes in a string and returns counts of each character in the string.
+
+#### Step 4: Solve or simplify
+
+
+#### Step 5: Look back and refactor
+
+
+#### Interview strategies
+
+
+**[⬆ Top](#📓-Table-of-Contents)**
+
+### The patterns
 
 
 
