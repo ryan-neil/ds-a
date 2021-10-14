@@ -444,6 +444,24 @@ Let's look at some problem solving strategies that can help when we are presente
   4. Can the _outputs_ be determined from the _inputs_? In other words, do I have enough information to solve the problem? 
   5. How should I _label_ the important pieces of _data_ that are a part of the problem?
 
+#### Step 1: Example:
+Q: Write a function which takes two numbers and returns their sum.
+
+Understanding the problem:
+```js
+// 1. Implement addition
+
+// 2. This depends, are we talking about floating points exclusively? How large will these numbers be (some languages have an upper bound for the size of numbers and if we want to add really large numbers it doesn't work well)?
+  // Also, are we only working with two inputs?
+
+// 3. Similar to the second point's logic, should it be an integer? Float? If we pass in two floats do we want a float back? If we pass in an integer and a float, are we even allowed to pass in a float? Or string?
+
+// 4. In most cases, yes. But what if someone only passes in one number? We wouldn't have enough information to do the addition at that point, so do we add zero? Do we return 'undefined' or 'null'? This would depend on the interviewer...
+
+// 5. So what matters? We have the 'inputs' and the 'outputs' and that's pretty much all we need... Maybe we name our function 'add' and have 'numOne' and 'numTwo' as the arguments with 'sum' as the result that we return.
+  // this is a very simply example but once we get into more complicated problems, thinking about this step by step can really make a difference.
+```
+
 #### Step 2: Explore concrete examples
 
 Coming up with examples can help us understand the problem better. Examples also provide sanity checks that your eventual solution works as it should.
@@ -459,20 +477,151 @@ Let's now look at some steps we can take for exploring concrete examples:
   3. Explore examples with _empty inputs_
   4. Explore examples with _invalid inputs_
 
+#### Step 2: Example:
+Q: Write a function which takes in a string and returns counts of each character in the string.
+
+Concrete examples:
+```js
+charCount('aaaa');
+/*
+  a: 4
+*/
+```
+```js
+charCount('hello');
+/*
+  h: 1,
+  h: 1,
+  h: 2,
+  h: 1
+*/
+```
+```js
+charCount('Your PIN number is 1234');
+/*
+  1: 1,
+  2: 1,
+  3: 1,
+  b: 1,
+  e: 1,
+  i: 2,
+  m: 1,
+  n: 2,
+  o: 1,
+  p: 1,
+  r: 2,
+  s: 1,
+  u: 2,
+  y: 1
+*/
+```
+
 #### Step 3: Break it down
 
 In other words take the actual steps of the problem and write them down. This doesn't mean full sudo code or valid syntax, it's little comments as a guide for the steps I'm going to need to take.
 
 This forces us to think about our code before we write it, and it helps us catch any lingering conceptual issues or misunderstandings before we dive in and have to worry about details.
 
-#### Example:
+#### Step 3: Example:
 Q: Write a function which takes in a string and returns counts of each character in the string.
+
+Now that we have some good concrete examples from step 2, let's type out the skeleton (somewhat pseudo code) of our function:
+```js
+function charCount(str) {
+  // 1. make object to return at the end
+  // 2. loop over string, for each char
+    // 2.1 if char is a number/letter AND is a key in object, add 1 to char count
+    // 2.2 if char is a number/letter AND not in object, add char to object and set value to 1
+    // 2.3 if char is something else (space, period, etc) don't do anything
+	
+  // 3. return object at the end
+}
+```
 
 #### Step 4: Solve or simplify
 
+So basically, SOLVE the problem if you can but if you can't SOLVE a simpler problem... This is where the "simplify" comes in.
+
+What this means is, trying to ignore the part that is giving you a really hard time in order to focus on everything else. It's worth it to do this because in an interview setting, we want to have something to show for yourself.
+
+#### The idea behind "Simplify":
+  * Find the core difficulty in what your're trying to do
+  * Temporarily ignore that difficulty
+  * Write a simplified solution
+  * Then incorporate that difficulty back in (by this step, we often gain insight into how to do this)
+
+#### Step 4: Example:
+Q: Write a function which takes in a string and returns counts of each character in the string.
+
+Let's fill in the actual syntax for our pseudo code:
+```js
+function charCount(str) {
+  // 1. create empty obj we will return at the end
+  let obj = {};
+  // 2. loop through all characters in string
+  for (let char of str) {
+    // 2.1 lowercase each character
+    char = char.toLowerCase();
+    // 2.2 check to be sure all characters are lowercase letters (a-z) or numbers (0-9) (regular expression)
+    if (/[a-z0-9]/.test(char)) {
+      // 2.2.1 check if the character is already in the object, meaning it's greater than 0 (it's set to 1 or 2 or 3 etc.)
+      if (obj[char] > 0) {
+        // if object character exists, add 1 to the character count
+        obj[char]++;
+      } else {
+        // if object character does not exist, set object (initialize) character to 1
+        obj[char] = 1;
+      }
+    }
+  }
+  // 3. return our object
+  return obj;
+}
+charCount('hello'); // -> { h: 1, e: 1, l: 2, o: 1 }
+```
 
 #### Step 5: Look back and refactor
 
+After we have solved our problem let's look at a checklist of questions we can ask ourselves:
+  * Can you check the result?
+  * Can you derive the result differently?
+  * Can you understand it at a glance?
+  * Can you use the result or method for some other problem?
+  * Can you improve the performance of your solution?
+  * Can you think of other ways to refactor?
+  * How have other people solved this problem?
+
+Let's refactor our previous code a bit:
+```js
+function charCount(str) {
+  let obj = {};
+  for (let char of str) {
+    // call our alphaNumeric function
+    if (isAlphaNumeric(char)) {
+      char = char.toLowerCase();
+      // here we can refactor with a `ternary operator` (condition ? expIfTrue : expIfFalse)
+      obj[char] ? obj[char]++ : (obj[char] = 1);
+    }
+  }
+  return obj;
+}
+console.log(charCount('Hello World hi!!!')); // { h: 2, e: 1, l: 3, o: 2, w: 1, r: 1, d: 1, i: 1 }
+
+// create function to use above
+function isAlphaNumeric(char) {
+  // get the character code at index 0 (it's only one a character string so it's only index 0)
+  let code = char.charCodeAt(0);
+
+  if (
+    !(code > 47 && code < 58) && // numeric (0-9)
+    !(code > 64 && code < 91) && // upper alpha (A-Z)
+    !(code > 96 && code < 123) // lower alpha (a-z)
+  ) {
+    return false;
+  }
+  return true;
+}
+```
 
 #### Interview strategies
 
