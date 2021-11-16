@@ -9,7 +9,8 @@ For this reference guide all example code will be written in the JavaScript prog
 [![Twitter Badge](https://img.shields.io/badge/-Twitter-00acee?style=flat-square&logo=Twitter&logoColor=white)](https://twitter.com/home?lang=en)
 
 #### References:
-  * [Javascript Algorithms and Data Structures Masterclass](https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/)
+  * [Javascript Algorithms and Data Structures Masterclass - Colt Steele](https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/)
+  * [Algorithms and Data Structures Masterclass - Github Notes](https://github.com/NKaty/Algorithms-and-Data-Structures)
 
 ## 📓 Table of Contents
 
