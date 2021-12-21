@@ -2,11 +2,14 @@
 [leetcode.com](https://leetcode.com)
 
 ### Resources
-[Getting Started and Two Sum Solution:](https://www.youtube.com/watch?v=pblq-fj137A) ThinkFWD
+* [How to use Leetcode EFFECTIVELY… and STOP grinding:](https://www.youtube.com/watch?v=GbyXxUDVeAo) Byte by Byte
+* [Getting Started and Two Sum Solution:](https://www.youtube.com/watch?v=pblq-fj137A) ThinkFWD
+* [10 Ways to Get Unstuck During Your Coding Interview:](https://www.youtube.com/watch?v=9uoyWWUYb6Y) Byte by Byte
 
 ## Table of Contents
 1. [Studying Segments](#1-Study-Segments)
-2. [Helpful Tips](#2-Helpful-Tips)
+2. [Patterns](#2-Patterns)
+3. [What If I'm Stuck?](#2-What-If-Im-Stuck)
 
 # 1. Studying Segments
 
@@ -26,25 +29,34 @@
 
 [Back to Top](#Table-of-Contents)
 
-# 2. Helpful Tips
+# 2. Patterns
+  * [14 Patterns to Ace Any Coding Interview Question](https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed)
 
-1. What are the most relevant problems?
+When it comes to solving Data Structure & Algorithm questions, it's extremely important to understand the underlying patterns behind each question.
 
-2. Understand the goal
+If you understand the generic patterns, you can use them as a template to solve a myriad of other problems with slight variations.
 
-3. Start with easy problems
+In this section we will lay out the _most common patterns_ that can be used to solve any coding interview question, as well as how to _identify_ each pattern.
 
-4. Simulate the real world
-  * Do not solve the problem in Leetcode. Do it on paper or a whiteboard. This is what it will most likely be in an interview.
+## 1. Sliding Window
 
-5. Plan for when you get stuck
-  * What is it that got me stuck? 
-  * What was the thought process of the person who solved the problem?
+The Sliding Window pattern is used to perform a required operation on a specific window size of a given array or linked list, such as finding the longest sub-array containing all 1s. 
 
-### How to get unstuck:
-  * [How to use Leetcode EFFECTIVELY… and STOP grinding:](https://www.youtube.com/watch?v=GbyXxUDVeAo) Byte by Byte
-  * [10 Ways to Get Unstuck During Your Coding Interview:](https://www.youtube.com/watch?v=9uoyWWUYb6Y) Byte by Byte
+Sliding Windows start from the 1st element and keep shifting right by one element and adjust the length of the window according to the problem that you are solving. In some cases, the window size remains constant and in other cases the sizes grows or shrinks.
 
+### Identification:
+  * The problem input is a linear data structure such as a linked list, array, or string
+  * You’re asked to find the longest/shortest substring, sub-array, or a desired value
+
+### Common Problems:
+  * Maximum sum sub-array of size ‘K’ (Easy)
+  * Longest substring with ‘K’ distinct characters (Medium)
+  * String anagrams (Hard)
+
+[Back to Top](#Table-of-Contents)
+
+# 3. What If I'm Stuck?
+  
 1. Start with a brute force solution
 2. Fully understand the problem
 3. Work through the problem by hand

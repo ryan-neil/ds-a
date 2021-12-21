@@ -1,6 +1,6 @@
 // Leetcode Question #9 Response:
 
 var isPalindrome = function(x) {
-	// code here
+	// logic here...
 };
-isPalindrome(-121);
+console.log(isPalindrome(121));

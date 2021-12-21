@@ -1,35 +1,29 @@
 <h1 align="left">Data Structures and Algorithms</h1>
 
 ### Introduction
-The goal of this document is to provide a quick reference guide for the main concepts of Data Structures and Algorithms, along with simple to understand sample code.
+The goal of this document is to provide a quick reference guide for the main concepts of Data Structures and Algorithms. There will also be some examples that are, hopefully, simple to understand.
 
-For this reference guide all example code will be written in the JavaScript programming language.
+For this reference guide all example code will be written in __JavaScript__.
 
-###### If you found this guide helpful give me a follow and let me know! 🤙🏻
-[![Twitter Badge](https://img.shields.io/badge/-Twitter-00acee?style=flat-square&logo=Twitter&logoColor=white)](https://twitter.com/home?lang=en)
-
-#### References:
-  * [Javascript Algorithms and Data Structures Masterclass - Colt Steele](https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/)
-  * [Algorithms and Data Structures Masterclass - Github Notes](https://github.com/NKaty/Algorithms-and-Data-Structures)
+### References:
+  * [Javascript Algorithms and Data Structures Masterclass:](https://www.udemy.com/course/js-algorithms-and-data-structures-masterclass/)  Colt Steele
+  * [Algorithms and Data Structures Masterclass:](https://github.com/NKaty/Algorithms-and-Data-Structures) Github Notes
 
 ## 📓 Table of Contents
 
 1. [Big O Notation](#1-Big-O-Notation)
-    * [Timing our code](#Timing-our-code)
-    * [The problem with time](#The-problem-with-time)
-    * [Big O logic](#Big-o-logic)
-    * [Space complexity](#Space-complexity)
-    * [Logarithms](#Logarithms)
 2. [Analyzing Performance of Arrays and Objects](#2-Analyzing-Performance-of-Arrays-and-Objects)
-    * [The Big O of objects](#The-Big-O-of-objects)
-    * [The Big O of arrays](#The-Big-O-of-arrays)
-3. [Problem Solving Approach](#3-Problem-Solving-Approach)
-    * [The approach](#The-approach)
-    * [The patterns](#The-patterns)
+3. [Problem Solving](#3-Problem-Solving-Approach)
 
-## 1. Big O Notation
+# 1. Big O Notation
 
-__Big O Notation__ allows us to have a numeric representation of the performance of code. It allows us to talk formally about how the runtime of an algorithm grows as the input grows.
+### Table of Contents:
+  * 1.1 [Timing Our Code](#11-Timing-Our-Code)
+  * 1.2 [Big O Logic](#12-Big-O-Logic)
+  * 1.3 [Space Complexity](#13-Space-Complexity)
+  * 1.4 [Logarithms](#14-Logarithms)
+
+__Big O Notation__ allows us to have a _numeric representation_ of the performance of code. It allows us to talk formally about how the runtime of an algorithm grows as the input grows.
 
 Well, why does this matter?
 
@@ -38,19 +32,20 @@ Well, why does this matter?
   * When your code slows down or crashes, identifying parts of the code that are inefficient can help us find pain points in our applications
   * It's important for interviews!
 
-Big O is focused on the _big_ picture.
+Big O is focused on the _BIG_ picture.
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### Timing our code
+## 1.1 Timing Our Code
 
-Suppose we want to write a function that calculates the sum of all numbers from 1 up to (and including) some number _n_. Let's look at two examples of some code:
+Suppose you want to write a function that calculates the sum of all numbers from 1 up to (and including) some number _n_. Let's look at two examples:
 
-Method 1: Big O = __O(n)__ (linear)
+### Method 1:
+ Big O = __O(n)__ (_linear_)
 ```js
-function addUpTo(n) {
+function addUpTo(num) {
   let total = 0;
-  for (let i = 1; i <= n; i++) {
+  for (let i = 1; i <= num; i++) {
     total += i;
   }
   return total;
@@ -64,10 +59,11 @@ console.log(`Time Elapsed: ${(t2 - t1) / 1000} seconds.`);
 // -> Time Elapsed: 1.16610 seconds.
 ```
 
-Method 2: Big O = __O(1)__ (constant)
+### Method 2: 
+Big O = __O(1)__ (_constant_)
 ```js
-function addUpTo(n) {
-  return n * (n + 1) / 2;
+function addUpTo(num) {
+  return num * (num + 1) / 2;
 }
 
 // test our algorithm
@@ -78,63 +74,26 @@ console.log(`Time Elapsed: ${(time2 - time1) / 1000} seconds.`);
 // -> Time Elapsed: 0.00001 seconds.
 ```
 
+> Note: In the above code we're using some built in JavaScript timing functions `performance.now()`. This will tell us the number of milliseconds since the document was created (loaded in).
+
 You'll notice our second method is much faster (relative) than method 1. But this is not the most efficient way of tracking whether one code block is faster or better than another code block.
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### The problem with time
-
-  * Different machines will record different times
-  * The same machine will record different times
-  * For fast algorithms, speed measurements may not be precise enough
-
-So how do we walk through our code and actually talk in general terms about which code is better without having to set up a new file and time it?
-
-That's where Big O Notation comes in!
-
-#### Counting operations not seconds:
-
-Rather than counting _seconds_, which are so variable... Let's count the _number_ of simple operations the computer has to perform. This will remain constant no matter what computer we're on.
-
-```js
-function addUpTo(n) {
-  return n * ( n + 1 ) / 2;
-}
-```
-In the example above, we have 3 __operations__ going on (1 multiplication, 1 addition, and 1 division). Regardless if our number (`n`) is 1 or 1 billion there will always only be 3 __operations__. 
-
-This is __O(1)__ (constant) which is very efficient.
-
-Let's compare that to our other example from above:
-```js
-function addUpTo(n) {
-  let total = 0;
-  for (let i = 1; i <= n; i++) {
-    total += i;
-  }
-  return total;
-}
-```
-In this example, since we're looping, where we have `total += i` the addition is not just 1 addition operation, it's `n` number of operations. And same goes for the rest of the operators in this method, they will all run `n` number of times. 
-
-This is __O(n)__ (linear) which is extremely inefficient.
-
-Depending on what we count, the number of operations can be as low as _2n_ or as high as _5n + 2_. But regardless of the exact number, the number of operations grows roughly _proportionally_ with _n_.
-
-**[⬆ Top](#📓-Table-of-Contents)**
-
-### Big O logic
+## 1.2 Big O Logic
 
 Warning! Technically definition:
 
 We say that an algorithm is __O(f(n))__ if the number of simple operations the computer has to do is eventually less than a constant times __f(n)__, as __n__ increases. Huh...
 
-Basically, what it's doing is describing the relationship between the input (f(n)) and the output or runtime (n, n², 1).
+Basically, what it's doing is describing the relationship between the input (`f(n)`) and the output or runtime (`n`, `n²`, `1`).
 
 Let's look as some options below:
 
-##### `f(n)`: a function with an input of 'n'
-##### `f(n) = n`: a function with an input of 'n' and an output of 'n'
+```
+f(n)`: a function with an input of 'n'.
+f(n) = n`: a function with an input of 'n' and an output of 'n'
+```
 
 Options:
   * f(n) could be __linear__ (f(n) = n)
@@ -142,27 +101,27 @@ Options:
   * f(n) could be __constant__ (f(n) = 1)
   * f(n) could be something entirely different
 
-#### Linear:
+### Linear:
 
-__O(n)__
+`O(n)`
 
 As n scales, the input (`f(n)`) and the runtime (`n`) scales as well.
 
-#### Quadratic:
+### Quadratic:
 
-__O(n²)__
+`O(n²)`
 
 As `n` scales, the runtime (`n²`) squares (square event).
 
 It's important to note that an `O(n)` operation inside of an `O(n)` operation gives us `O(n * n)` or `O(n²)`.
 
-#### Constant:
+### Constant:
 
-__O(1)__
+`O(1)`
 
-As `n` scales, it doesn't really have an impact because runtime is always constant, which we simplify down to `1`.
+As `n` scales, it doesn't really have an impact because runtime is always constant, which you can simplify down to `1`.
 
-#### Simplifying Big O:
+### Simplifying Big O:
 
 Constants don't matter.
 ```
@@ -178,9 +137,9 @@ O(1000n + 50) -> O(n)
 O(n² + 5n + 8) -> O(n²)
 ```
 
-#### Shorthands:
+### Shorthands:
 
-> Note: these rules won't always work, but are a helpful starting point.
+_Note: these rules won't always work, but are a helpful starting point._
 
 1. Arithmetic operations (+, -, *, /) are constant
 2. Variable assignment is constant, (x = 1) and (x = 1000) are roughly the same
@@ -189,15 +148,15 @@ O(n² + 5n + 8) -> O(n²)
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### Space complexity
+## 1.3 Space Complexity
 
 So far, we've been focusing on __time complexity__: 
-  * How can we analyze the __runtime__ of an algorithm as the size of the inputs increase?
+  * How can you analyze the __runtime__ of an algorithm as the size of the inputs increase?
 
-We can also use Big O Notation to analyze __space complexity__: 
-  * How much additional memory do we need to allocate in order to run the code in our algorithm?
+You can also use Big O Notation to analyze __space complexity__: 
+  * How much additional memory do you need to allocate in order to run the code in our algorithm?
 
-> Note: when we talk about space complexity, technically we'll be talking about auxiliary space complexity
+> Note: when you talk about space complexity, technically you will be talking about auxiliary space complexity
 
 __Auxiliary Space__: is the temporary space allocated by your algorithm to solve the problem, with respect to input size.
 
@@ -205,10 +164,9 @@ __Space Complexity__: is the total space used by your algorithm to solve the pro
 
 An example between the two would be:
 
-If we compare Quicksort and Mergesort, they both have a space complexity of O(n) and run at O(n log n) time, but Mergesort requires Auxiliary space of O(n) while Quicksort requires Auxiliary space of O(1).
+If you compare Quicksort and Mergesort, they both have a space complexity of O(n) and run at O(n log n) time, but Mergesort requires Auxiliary space of O(n) while Quicksort requires Auxiliary space of O(1).
 
 #### Rules of thumb:
-
   * Most primitives (booleans, numbers, undefined, null) are constant space
   * Strings require O(n) space (where n is the string length)
   * Reference types are generally O(n), where n is the length (for arrays) or the number of keys (for objects)
@@ -249,9 +207,9 @@ So the space taken up is directly proportionate to `n` and to the input array. S
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### Logarithms
+## 1.4 Logarithms
 
-So far, we've encountered some of the most common complexities: __O(1)__, __O(n)__, __O(n²)__. Sometimes Big O expressions invilve more complex mathematical expressions. One that appears more often than we might like is the __logarithm__.
+So far, we've encountered some of the most common complexities: __O(1)__, __O(n)__, __O(n²)__. Sometimes Big O expressions involve more complex mathematical expressions. One that appears more often than you might like is the __logarithm__.
 
 #### What's a logarithm?
 
@@ -300,22 +258,19 @@ In example 2 from above, there's no way of dividing 2 evenly into 25 but this is
 What we do care about is the Logarithm Complexity. Logarithm time complexity is amazing! If we have an algorithm with O(log n) this is fantastic.
 
 #### Why is this important?
-
   * Certain searching algorithms have logarithmic time complexity.
   * Efficient sorting algorithms involve logarithms.
   * Recursion sometimes involves logarithmic space complexity.
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-## 2. Analyzing Performance of Arrays and Objects
+# 2. Analyzing Performance of Arrays and Objects
 
-#### Objectives:
+### Table of Contents:
+  * 2.1 [The Big O of Objects](#21-Big-O-of-Objects)
+  * 2.2 [The Big O of Arrays](#22-Big-O-of-Arrays)
 
-  * Understand how objects and arrays work, through the lens of Big O
-  * Explain why adding elements to the beginning of an array is costly
-  * Compare and contrast the runtime for arrays and objects, as well as their built-in methods
-
-### The Big O of objects
+## 2.1 Big O of Objects
 
 Example:
 ```js
@@ -327,8 +282,8 @@ let instructor = {
 ```
 
 When to use objects:
-  * Objects work well when we don't need order
-  * When we need fast access/insertion and removal
+  * Objects work well when you don't need order
+  * When you need fast access/insertion and removal
 
 Insertion - __O(1)__
 <br>
@@ -338,9 +293,9 @@ Search - __O(N)__
 <br>
 Access - __O(1)__
 
-As you can see from above, objects are VERY fast. They're constant time which is the best we can do.
+As you can see from above, objects are VERY fast. They're constant time which is the best you can do.
 
-#### Object methods
+### Object methods
 
 Now let's look at the Big O of object methods we have in JavaScript:
 
@@ -354,7 +309,7 @@ hasOwnProperty - __O(1)__
 
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### The Big O of arrays
+## 2.2 Big O of Arrays
 
 Example:
 ```js
@@ -389,7 +344,7 @@ This has to do with the indices of the array. When we add an item to the beginni
 
 The same logic applies for removing items from the beginning and end of arrays. So, `push()` and `pop()` will always be faster than `shift()` and `unshift()`.
 
-#### Array methods:
+### Array methods:
 
 Now let's look at the Big O of array methods we have in JavaScript:
 
@@ -411,24 +366,28 @@ sort() - __O(N * log N)__
 <br>
 forEach() / map() / filter() / reduce() / etc. - __O(N)__
 
-#### Takeaways:
+### Summary
 
 1. Objects are fast at pretty much everything, but there's no order to them.
 2. Arrays are great when you need an order, but still be mindful that it's better (if we can) to add and remove from the end and avoid adding and removing from the  beginning, because that starts a cascade effect, hence the terms _shift_ and _unshift_ where everything has to be re-indexed. _The same goes for adding and removing from the middle_.
  
 **[⬆ Top](#📓-Table-of-Contents)**
 
-## 3. Problem Solving Approach
+# 3. Problem Solving
+
+### Table of Contents:
+  * 3.1 [The Approach](#31-The-Approach)
+  * 3.2 [The Patterns](#32-The-Patterns)
 
 Let's start off by defining an __algorithm__. An algorithm is essentially a __process__ or __set of steps__ to accomplish a certain task.
 
 Almost _everything_ we do in programming involves some sort of algorithm. It is the _foundation_ for being a _successful_ problem solving _developer_.
 
 So how do we improve at solving problems?
-  1. __Devise__ a plan for solving problems
-  2. __Master__ common problem solving patterns
+  1. __Devise__ a plan for solving problems (Section 3.1)
+  2. __Master__ common problem solving patterns (Section 3.2)
 
-### The approach
+## 3.1 The Approach
 
 Let's look at some problem solving strategies that can help when we are presented with an algorithm problem:
   * Understand the problem
@@ -437,7 +396,7 @@ Let's look at some problem solving strategies that can help when we are presente
   * Solve/simplify
   * Look back and refactor
 
-#### Step 1: Understand the problem
+### Understand the Problem
 
   1. Can I _restate_ the problem in my own words?
   2. What are the _inputs_ that go into the problem?
@@ -445,25 +404,7 @@ Let's look at some problem solving strategies that can help when we are presente
   4. Can the _outputs_ be determined from the _inputs_? In other words, do I have enough information to solve the problem? 
   5. How should I _label_ the important pieces of _data_ that are a part of the problem?
 
-#### Step 1: Example:
-Q: Write a function which takes two numbers and returns their sum.
-
-Understanding the problem:
-```js
-// 1. Implement addition
-
-// 2. This depends, are we talking about floating points exclusively? How large will these numbers be (some languages have an upper bound for the size of numbers and if we want to add really large numbers it doesn't work well)?
-  // Also, are we only working with two inputs?
-
-// 3. Similar to the second point's logic, should it be an integer? Float? If we pass in two floats do we want a float back? If we pass in an integer and a float, are we even allowed to pass in a float? Or string?
-
-// 4. In most cases, yes. But what if someone only passes in one number? We wouldn't have enough information to do the addition at that point, so do we add zero? Do we return 'undefined' or 'null'? This would depend on the interviewer...
-
-// 5. So what matters? We have the 'inputs' and the 'outputs' and that's pretty much all we need... Maybe we name our function 'add' and have 'numOne' and 'numTwo' as the arguments with 'sum' as the result that we return.
-  // this is a very simply example but once we get into more complicated problems, thinking about this step by step can really make a difference.
-```
-
-#### Step 2: Explore concrete examples
+### Explore concrete examples
 
 Coming up with examples can help us understand the problem better. Examples also provide sanity checks that your eventual solution works as it should.
 
@@ -478,68 +419,13 @@ Let's now look at some steps we can take for exploring concrete examples:
   3. Explore examples with _empty inputs_
   4. Explore examples with _invalid inputs_
 
-#### Step 2: Example:
-Q: Write a function which takes in a string and returns counts of each character in the string.
-
-Concrete examples:
-```js
-charCount('aaaa');
-/*
-  a: 4
-*/
-```
-```js
-charCount('hello');
-/*
-  h: 1,
-  h: 1,
-  h: 2,
-  h: 1
-*/
-```
-```js
-charCount('Your PIN number is 1234');
-/*
-  1: 1,
-  2: 1,
-  3: 1,
-  b: 1,
-  e: 1,
-  i: 2,
-  m: 1,
-  n: 2,
-  o: 1,
-  p: 1,
-  r: 2,
-  s: 1,
-  u: 2,
-  y: 1
-*/
-```
-
-#### Step 3: Break it down
+### Break it down
 
 In other words take the actual steps of the problem and write them down. This doesn't mean full sudo code or valid syntax, it's little comments as a guide for the steps I'm going to need to take.
 
 This forces us to think about our code before we write it, and it helps us catch any lingering conceptual issues or misunderstandings before we dive in and have to worry about details.
 
-#### Step 3: Example:
-Q: Write a function which takes in a string and returns counts of each character in the string.
-
-Now that we have some good concrete examples from step 2, let's type out the skeleton (somewhat pseudo code) of our function:
-```js
-function charCount(str) {
-  // 1. make object to return at the end
-  // 2. loop over string, for each char
-    // 2.1 if char is a number/letter AND is a key in object, add 1 to char count
-    // 2.2 if char is a number/letter AND not in object, add char to object and set value to 1
-    // 2.3 if char is something else (space, period, etc) don't do anything
-	
-  // 3. return object at the end
-}
-```
-
-#### Step 4: Solve or simplify
+### Solve or simplify
 
 So basically, SOLVE the problem if you can but if you can't SOLVE a simpler problem... This is where the "simplify" comes in.
 
@@ -551,37 +437,7 @@ What this means is, trying to ignore the part that is giving you a really hard t
   * Write a simplified solution
   * Then incorporate that difficulty back in (by this step, we often gain insight into how to do this)
 
-#### Step 4: Example:
-Q: Write a function which takes in a string and returns counts of each character in the string.
-
-Let's fill in the actual syntax for our pseudo code:
-```js
-function charCount(str) {
-  // 1. create empty obj we will return at the end
-  let obj = {};
-  // 2. loop through all characters in string
-  for (let char of str) {
-    // 2.1 lowercase each character
-    char = char.toLowerCase();
-    // 2.2 check to be sure all characters are lowercase letters (a-z) or numbers (0-9) (regular expression)
-    if (/[a-z0-9]/.test(char)) {
-      // 2.2.1 check if the character is already in the object, meaning it's greater than 0 (it's set to 1 or 2 or 3 etc.)
-      if (obj[char] > 0) {
-        // if object character exists, add 1 to the character count
-        obj[char]++;
-      } else {
-        // if object character does not exist, set object (initialize) character to 1
-        obj[char] = 1;
-      }
-    }
-  }
-  // 3. return our object
-  return obj;
-}
-charCount('hello'); // -> { h: 1, e: 1, l: 2, o: 1 }
-```
-
-#### Step 5: Look back and refactor
+### Look back and refactor
 
 After we have solved our problem let's look at a checklist of questions we can ask ourselves:
   * Can you check the result?
@@ -592,45 +448,78 @@ After we have solved our problem let's look at a checklist of questions we can a
   * Can you think of other ways to refactor?
   * How have other people solved this problem?
 
-Let's refactor our previous code a bit:
-```js
-function charCount(str) {
-  let obj = {};
-  for (let char of str) {
-    // call our alphaNumeric function
-    if (isAlphaNumeric(char)) {
-      char = char.toLowerCase();
-      // here we can refactor with a `ternary operator` (condition ? expIfTrue : expIfFalse)
-      obj[char] ? obj[char]++ : (obj[char] = 1);
-    }
-  }
-  return obj;
-}
-console.log(charCount('Hello World hi!!!')); // { h: 2, e: 1, l: 3, o: 2, w: 1, r: 1, d: 1, i: 1 }
-
-// create function to use above
-function isAlphaNumeric(char) {
-  // get the character code at index 0 (it's only one a character string so it's only index 0)
-  let code = char.charCodeAt(0);
-
-  if (
-    !(code > 47 && code < 58) && // numeric (0-9)
-    !(code > 64 && code < 91) && // upper alpha (A-Z)
-    !(code > 96 && code < 123) // lower alpha (a-z)
-  ) {
-    return false;
-  }
-  return true;
-}
-```
-
-#### Interview strategies
-
-
 **[⬆ Top](#📓-Table-of-Contents)**
 
-### The patterns
+## 3.2 The Patterns
 
+In this section we will be covering some of the more common patterns we might come across in interview questions. For each of these concepts we will be introducing the idea, explaining it, and then coding an example of the pattern. Here are the patterns we will be covering:
+  * [Frequency Counters](#Frequency-Counters)
 
+### Frequency Counters
+
+#### The Idea:
+
+This pattern uses objects or sets to collect values/frequencies of values. This pattern can often help to avoid the need for nested loops or `O(n²)` operations with arrays/strings.
+
+This is useful in algorithms or challenges where we have multiple pieces of data/inputs, and you need to compare them to see if they consist of similar values.
+  * If they are anagrams of one another
+  * If the value is contained inside of another value
+
+#### Example:
+
+Write a function called `same`, which accepts two arrays. The function should return true if every value in the array has its corresponding value squared in the second array. The frequency of values must be the same.
+```js
+same([ 1, 2, 3 ], [ 4, 1, 9 ]) // true
+same([ 1, 2, 3 ], [ 1, 9 ]) // false
+same([ 1, 2, 1 ], [ 4, 4, 1 ]) // false (must be same frequency)
+```
+
+Let's write out some code:
+```js
+const same = (arr1, arr2) => {
+  // check if the arr lengths are the same
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  let store1 = {};
+  let store2 = {};
+
+  // loop through arr1
+  for (let val of arr1) {
+    // update the store1 object and add 1 if it is already in there, if it's not we will initialize it with 1
+    store1[val] = (store1[val] || 0) + 1;
+  }
+  // loop through arr2
+  for (let val of arr2) {
+    // update the store2 object and add 1 if it is already in there, if it's not we will initialize it with 1
+    store2[val] = (store2[val] || 0) + 1;
+  }
+
+  console.log(store1); // -> { '1': 1, '2': 2, '3': 1 }
+  console.log(store2); // -> { '1': 1, '4': 2, '9': 1 }
+
+  // loop through store1's object keys
+  for (let key in store1) {
+    // check if the store1 key's squared is not a key in store2
+    if (!(key ** 2 in store2)) {
+      return false;
+    }
+    // then we check if the stores values don't correspond (for example, if there are two 2's there needs to be two 4's)
+    if (store2[key ** 2] !== store1[key]) {
+      return false;
+    }
+  }
+  return true;
+};
+same([ 1, 2, 3, 2 ], [ 9, 1, 4, 4 ]); // -> true
+```
+
+In summary, the idea behind the frequency counter is you usually use an object. You then use that object to construct a profile (store), as a way of breaking down the contents of an array/string and then you can quickly compare that breakdown to how another object looks that was constructed from a string/array.
+
+### Pattern
+
+#### The Idea:
+#### Example:
 
 **[⬆ Top](#📓-Table-of-Contents)**

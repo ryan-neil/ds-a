@@ -8,8 +8,17 @@ var isPalindrome = function(x) {
 	const numToString = x.toString();
 	// reverse the string
 	const reverseString = numToString.split('').reverse().join('');
-
+	// compare converted string to the reversed string
 	const isEqual = numToString === reverseString ? true : false;
 	console.log(isEqual);
 };
-isPalindrome(-121);
+isPalindrome(121);
+
+// reversedString breakdown:
+const num = 345;
+num.split('');
+// -> [ "3", "4", "5" ]
+num.split('').reverse();
+// -> [ "5", "4", "3" ]
+num.split('').reverse().join('');
+// -> 543
