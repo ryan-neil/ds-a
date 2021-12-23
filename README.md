@@ -579,7 +579,9 @@ sumZero([ -4, -3, -2, -1, 0, 1, 2, 3, 6 ]); // -> [ -3, 3 ]
 
 #### The Idea:
 
+This pattern involves creating a _window_ which can either be an array or number from one position to another. Depending on a certain condition, the window either increases or closes (and a new window is created).
 
+This pattern is very useful for keeping track of a subset of data in an array/string etc.
 
 #### Example:
 
